@@ -4,7 +4,7 @@ module "lambda_modules_download" {
 
   function_name = "${var.name_prefix}-modules-download"
   description   = "Registry API: /:namespace/:name/:provider/:version/download"
-  handler       = "modules-download"
+  handler       = "registry-lambda-aws"
   runtime       = "go1.x"
 
   memory_size = 256
@@ -12,6 +12,7 @@ module "lambda_modules_download" {
 
   environment_variables = {
     BUCKET_NAME = aws_s3_bucket.this.id
+    LAMBDA_TYPE = "modules-download"
   }
 
   create_role = false
@@ -23,23 +24,10 @@ module "lambda_modules_download" {
   create_package = false
   s3_existing_package = {
     bucket = var.s3_bucket
-    key    = aws_s3_bucket_object.lambda_modules_download.key
+    key    = var.s3_bucket_key
   }
 
   tags = merge({
     Name = "${var.name_prefix}-modules-download"
   }, var.tags)
-}
-
-data "archive_file" "lambda_modules_download" {
-  type        = "zip"
-  source_file = "${var.distrib_dir}/modules-download"
-  output_path = "${path.module}/modules-download.zip"
-}
-
-resource "aws_s3_bucket_object" "lambda_modules_download" {
-  bucket = var.s3_bucket
-  key    = "${var.s3_prefix}terraform-serverless-private-registry/${var.lambda_version}/modules-download.zip"
-  source = data.archive_file.lambda_modules_download.output_path
-  etag   = filemd5("${var.distrib_dir}/modules-download")
 }

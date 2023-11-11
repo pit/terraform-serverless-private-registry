@@ -4,7 +4,7 @@ module "lambda_custom_providers_checksums_upload" {
 
   function_name = "${var.name_prefix}-custom-providers-checksums-upload"
   description   = "Registry API: GET /:namespace/:type/:version/checksums/upload"
-  handler       = "custom-providers-checksums-upload"
+  handler       = "registry-lambda-aws"
   runtime       = "go1.x"
 
   memory_size = 256
@@ -12,6 +12,7 @@ module "lambda_custom_providers_checksums_upload" {
 
   environment_variables = {
     BUCKET_NAME = aws_s3_bucket.this.id
+    LAMBDA_TYPE = "custom-providers-checksums-upload"
   }
 
   create_role = false
@@ -23,23 +24,10 @@ module "lambda_custom_providers_checksums_upload" {
   create_package = false
   s3_existing_package = {
     bucket = var.s3_bucket
-    key    = aws_s3_bucket_object.lambda_custom_providers_checksums_upload.key
+    key    = var.s3_bucket_key
   }
 
   tags = merge({
     Name = "${var.name_prefix}-custom-providers-checksums-upload"
   }, var.tags)
-}
-
-data "archive_file" "lambda_custom_providers_checksums_upload" {
-  type        = "zip"
-  source_file = "${var.distrib_dir}/custom-providers-checksums-upload"
-  output_path = "${path.module}/custom-providers-checksums-upload.zip"
-}
-
-resource "aws_s3_bucket_object" "lambda_custom_providers_checksums_upload" {
-  bucket = var.s3_bucket
-  key    = "${var.s3_prefix}terraform-serverless-private-registry/${var.lambda_version}/custom-providers-checksums-upload.zip"
-  source = data.archive_file.lambda_custom_providers_checksums_upload.output_path
-  etag   = filemd5("${var.distrib_dir}/custom-providers-checksums-upload")
 }
