@@ -1,10 +1,9 @@
-package main
+package aws_custome_modules_upload
 
 import (
 	"context"
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 	"go.uber.org/zap"
 	"net/http"
 	"os"
@@ -31,10 +30,6 @@ func Setup() {
 
 func init() {
 	Setup()
-}
-
-func main() {
-	lambda.Start(Handler)
 }
 
 func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {

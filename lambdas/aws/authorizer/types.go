@@ -1,11 +1,11 @@
-package main
+package aws_authorizer
 
 type APIGatewayAuthorizerRequest struct {
-	Version               string              `json:"version"`
-	Type                  string              `json:"type"`
-	RouteArn              string              `json:"routeArn"`
-	RouteKey              string              `json:"routeKey"`
-	IdentitySource        []string            `json:"identitySource"`
+	Version        string   `json:"version"`
+	Type           string   `json:"type"`
+	RouteArn       string   `json:"routeArn"`
+	RouteKey       string   `json:"routeKey"`
+	IdentitySource []string `json:"identitySource"`
 	//RawQueryString        string              `json:"rawQueryString"`
 	//RawPath               string              `json:"rawPath"`
 	//Cookies               []string            `json:"cookies"`
@@ -38,9 +38,9 @@ type APIGatewayCustomAuthorizerRequestIdentity struct {
 	SourceIP string `json:"sourceIp"`
 }
 
-//type APIGatewayAuthorizerResponse struct {
-//	IsAuthorized bool `json"isAuthorized"`
-//}
+//	type APIGatewayAuthorizerResponse struct {
+//		IsAuthorized bool `json"isAuthorized"`
+//	}
 type APIGatewayAuthorizerResponse struct {
 	PrincipalID        string                 `json:"principalId"`
 	PolicyDocument     IAMPolicyDocument      `json:"policyDocument"`

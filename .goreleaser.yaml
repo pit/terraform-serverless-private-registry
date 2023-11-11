@@ -24,204 +24,35 @@ changelog:
       - '^integration-test:'
 
 builds:
-#  - id: yandex-cloud-authorizer
-#    dir: lambdas/yandex-cloud/authorizer
-#    binary: authorizer
-#    goos:
-#      - linux
-#    goarch:
-#      - amd64
-#
-#  - id: yandex-cloud-discovery
-#    dir: lambdas/yandex-cloud/discovery
-#    binary: discovery
-#    goos:
-#      - linux
-#    goarch:
-#      - amd64
-#
-#  - id: yandex-cloud-modules-download
-#    dir: lambdas/yandex-cloud/modules-download
-#    binary: modules-download
-#    goos:
-#      - linux
-#    goarch:
-#      - amd64
-#
-#  - id: yandex-cloud-modules-get
-#    dir: lambdas/yandex-cloud/modules-get
-#    binary: modules-get
-#    goos:
-#      - linux
-#    goarch:
-#      - amd64
-#
-#  - id: yandex-cloud-providers-download
-#    dir: lambdas/yandex-cloud/providers-download
-#    binary: providers-download
-#    goos:
-#      - linux
-#    goarch:
-#      - amd64
-#
-#  - id: yandex-cloud-providers-versions
-#    dir: lambdas/yandex-cloud/providers-versions
-#    binary: providers-versions
+#  - id: registry-lambda-yandex
+#    dir: lambdas/yandex/registry-lambda-yandex
+#    binary: registry-lambda-yandex
 #    goos:
 #      - linux
 #    goarch:
 #      - amd64
 
-  - id: aws-default
-    dir: lambdas/aws/default
-    binary: default
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-index
-    dir: lambdas/aws/index
-    binary: index
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-authorizer
-    dir: lambdas/aws/authorizer
-    binary: authorizer
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-discovery
-    dir: lambdas/aws/discovery
-    binary: discovery
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-modules-download
-    dir: lambdas/aws/modules-download
-    binary: modules-download
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-modules-versions
-    dir: lambdas/aws/modules-versions
-    binary: modules-versions
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  # - id: aws-modules-get
-  #   dir: lambdas/aws/modules-get
-  #   binary: modules-get
-  #   goos:
-  #     - linux
-  #   goarch:
-  #     - amd64
-
-  - id: aws-providers-download
-    dir: lambdas/aws/providers-download
-    binary: providers-download
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-providers-versions
-    dir: lambdas/aws/providers-versions
-    binary: providers-versions
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-custom-modules-upload
-    dir: lambdas/aws/custom-modules-upload
-    binary: custom-modules-upload
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-custom-providers-upload
-    dir: lambdas/aws/custom-providers-upload
-    binary: custom-providers-upload
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-custom-providers-checksums-upload
-    dir: lambdas/aws/custom-providers-checksums-upload
-    binary: custom-providers-checksums-upload
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-modules-latest-version
-    dir: lambdas/aws/modules-latest-version
-    binary: modules-latest-version
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-modules-list
-    dir: lambdas/aws/modules-list
-    binary: modules-list
-    goos:
-      - linux
-    goarch:
-      - amd64
-
-  - id: aws-modules-search
-    dir: lambdas/aws/modules-search
-    binary: modules-search
+  - id: registry-lambda-aws
+    dir: lambdas/aws/
+    binary: registry-lambda-aws
     goos:
       - linux
     goarch:
       - amd64
 
 archives:
-  - id: aws-lambdas
+  - id: lambda-aws
     builds:
-      - aws-default
-      - aws-index
-      - aws-authorizer
-      - aws-discovery
-      - aws-modules-download
-      - aws-modules-versions
-      - aws-providers-download
-      - aws-providers-versions
-      - aws-custom-modules-upload
-      - aws-custom-providers-upload
-      - aws-custom-providers-checksums-upload
-#      - aws-modules-search
-#      - aws-modules-list
-#      - aws-modules-latest-version
+      - registry-lambda-aws
     files:
       - version.txt
     format: zip
-    name_template: "{{ .ProjectName }}-aws-lambdas-{{ .Version }}"
+    name_template: "{{ .ProjectName }}-lambda-aws-{{ .Version }}"
     wrap_in_directory: false
 
-#  - id: yandex-cloud-lambdas
+#  - id: lambda-yandex
 #    builds:
-#      - yandex-cloud-authorizer
-#      - yandex-cloud-discovery
-#      - yandex-cloud-modules-download
-#      - yandex-cloud-providers-download
-#      - yandex-cloud-providers-versions
+#      - registry-lambda-yandex
 #    format: zip
-#    name_template: "{{ .ProjectName }}-yandex-cloud-lambdas-{{ .Version }}"
+#    name_template: "{{ .ProjectName }}-lambda-yandex-{{ .Version }}"
 #    wrap_in_directory: false

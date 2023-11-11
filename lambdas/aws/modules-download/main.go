@@ -1,10 +1,9 @@
-package main
+package aws_modules_download
 
 import (
 	"context"
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 	"go.uber.org/zap"
 	"os"
 	"terraform-serverless-private-registry/lib/helpers"
@@ -22,12 +21,8 @@ func init() {
 	logger, _ = helpers.InitLogger("DEBUG", true)
 	logger.Debug("Lambda loading")
 
-	storage, _ := storage.NewStorage(bucketName, logger)
-	modulesSvc, _ = modules.NewModules(storage, logger)
-}
-
-func main() {
-	lambda.Start(Handler)
+	storageSvc, _ := storage.NewStorage(bucketName, logger)
+	modulesSvc, _ = modules.NewModules(storageSvc, logger)
 }
 
 func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {

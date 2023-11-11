@@ -1,4 +1,4 @@
-package main
+package aws_custome_modules_upload
 
 import (
 	"context"
