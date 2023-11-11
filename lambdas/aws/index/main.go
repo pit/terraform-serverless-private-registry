@@ -1,16 +1,11 @@
-package main
+package aws_index
 
 import (
 	"context"
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 	"net/http"
 	"terraform-serverless-private-registry/lib/helpers"
 )
-
-func main() {
-	lambda.Start(Handler)
-}
 
 type Response struct {
 	Status string `json:"status"`

@@ -4,11 +4,15 @@ module "lambda_default" {
 
   function_name = "${var.name_prefix}-default"
   description   = "Registry API: $default"
-  handler       = "default"
+  handler       = "registry-lambda-aws"
   runtime       = "go1.x"
 
   memory_size = 256
   timeout     = 5
+
+  environment_variables = {
+    LAMBDA_TYPE = "default"
+  }
 
   create_role = false
   lambda_role = module.lambdas_role.iam_role_arn
@@ -19,23 +23,10 @@ module "lambda_default" {
   create_package = false
   s3_existing_package = {
     bucket = var.s3_bucket
-    key    = aws_s3_bucket_object.lambda_default.key
+    key    = var.s3_bucket_key
   }
 
   tags = merge({
     Name = "${var.name_prefix}-default"
   }, var.tags)
-}
-
-data "archive_file" "lambda_default" {
-  type        = "zip"
-  source_file = "${var.distrib_dir}/default"
-  output_path = "${path.module}/default.zip"
-}
-
-resource "aws_s3_bucket_object" "lambda_default" {
-  bucket = var.s3_bucket
-  key    = "${var.s3_prefix}terraform-serverless-private-registry/${var.lambda_version}/default.zip"
-  source = data.archive_file.lambda_default.output_path
-  etag   = filemd5("${var.distrib_dir}/default")
 }

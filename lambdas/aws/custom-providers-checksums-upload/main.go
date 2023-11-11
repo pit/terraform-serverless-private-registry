@@ -1,11 +1,10 @@
-package main
+package aws_custom_providers_checksums_upload
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 	"go.uber.org/zap"
 	"net/http"
 	"os"
@@ -37,10 +36,6 @@ func init() {
 	bucketName := os.Getenv("BUCKET_NAME")
 	storageSvc, _ := storage.NewStorage(bucketName, logger)
 	providersSvc, _ = providers.NewProviders(storageSvc, logger)
-}
-
-func main() {
-	lambda.Start(Handler)
 }
 
 func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {

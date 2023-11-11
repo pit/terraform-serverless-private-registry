@@ -1,9 +1,8 @@
-package main
+package aws_discovery
 
 import (
 	"context"
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 	"go.uber.org/zap"
 	"net/http"
 	"terraform-serverless-private-registry/lib/helpers"
@@ -15,10 +14,6 @@ var (
 
 func init() {
 	logger, _ = helpers.InitLogger("DEBUG", true)
-}
-
-func main() {
-	lambda.Start(Handler)
 }
 
 type Response struct {

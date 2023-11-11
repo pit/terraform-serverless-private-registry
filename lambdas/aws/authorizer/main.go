@@ -1,9 +1,8 @@
-package main
+package aws_authorizer
 
 import (
 	"encoding/base64"
 	"fmt"
-	"github.com/aws/aws-lambda-go/lambda"
 	"go.uber.org/zap"
 	"os"
 	"strings"
@@ -19,10 +18,6 @@ var (
 func init() {
 	logger, _ = helpers.InitLogger("DEBUG", true)
 	authorizationSvc, _ = authorization.NewAuthorization(logger)
-}
-
-func main() {
-	lambda.Start(Handler)
 }
 
 func Handler(request APIGatewayAuthorizerRequest) (*APIGatewayAuthorizerResponse, error) {

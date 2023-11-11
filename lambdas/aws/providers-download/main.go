@@ -1,10 +1,9 @@
-package main
+package aws_providers_download
 
 import (
 	"context"
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 	"go.uber.org/zap"
 	"net/http"
 	"os"
@@ -21,12 +20,8 @@ var (
 func init() {
 	logger, _ = helpers.InitLogger("DEBUG", true)
 	bucketName := os.Getenv("BUCKET_NAME")
-	storage, _ := storage.NewStorage(bucketName, logger)
-	providersSvc, _ = providers.NewProviders(storage, logger)
-}
-
-func main() {
-	lambda.Start(Handler)
+	storageSvc, _ := storage.NewStorage(bucketName, logger)
+	providersSvc, _ = providers.NewProviders(storageSvc, logger)
 }
 
 func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {

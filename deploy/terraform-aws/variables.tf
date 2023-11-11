@@ -1,16 +1,11 @@
-variable "distrib_dir" {
-  type = string
-  description = "Path to local folder with unpacked lambdas distribs"
-}
-
 variable "s3_bucket" {
   type        = string
   description = "S3 bucket for storing lambda packages before deploy"
 }
 
-variable "s3_prefix" {
+variable "s3_bucket_key" {
   type        = string
-  description = "S3 bucket for storing lambda packages before deploy"
+  description = "S3 bucket key with distrib archive"
   default     = ""
 }
 

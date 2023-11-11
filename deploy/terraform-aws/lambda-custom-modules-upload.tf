@@ -4,7 +4,7 @@ module "lambda_custom_modules_upload" {
 
   function_name = "${var.name_prefix}-custom-modules-upload"
   description   = "Registry API: GET /:namespace/:name/:provider/:version/upload"
-  handler       = "custom-modules-upload"
+  handler       = "registry-lambda-aws"
   runtime       = "go1.x"
 
   memory_size = 256
@@ -12,6 +12,7 @@ module "lambda_custom_modules_upload" {
 
   environment_variables = {
     BUCKET_NAME = aws_s3_bucket.this.id
+    LAMBDA_TYPE = "custom-modules-upload"
   }
 
   create_role = false
@@ -23,23 +24,10 @@ module "lambda_custom_modules_upload" {
   create_package = false
   s3_existing_package = {
     bucket = var.s3_bucket
-    key    = aws_s3_bucket_object.lambda_custom_modules_upload.key
+    key    = var.s3_bucket_key
   }
 
   tags = merge({
     Name = "${var.name_prefix}-custom-modules-upload"
   }, var.tags)
-}
-
-data "archive_file" "lambda_custom_modules_upload" {
-  type        = "zip"
-  source_file = "${var.distrib_dir}/custom-modules-upload"
-  output_path = "${path.module}/custom-modules-upload.zip"
-}
-
-resource "aws_s3_bucket_object" "lambda_custom_modules_upload" {
-  bucket = var.s3_bucket
-  key    = "${var.s3_prefix}terraform-serverless-private-registry/${var.lambda_version}/custom-modules-upload.zip"
-  source = data.archive_file.lambda_custom_modules_upload.output_path
-  etag   = filemd5("${var.distrib_dir}/custom-modules-upload")
 }

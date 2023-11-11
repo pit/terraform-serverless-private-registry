@@ -283,3 +283,59 @@ func DecodeBase64(data string) ([]byte, error) {
 	result, err := base64.StdEncoding.DecodeString(data)
 	return result, err
 }
+
+type LambdaType int
+
+const (
+	LambdaTypeAuthorizer LambdaType = iota
+	LambdaTypeCustomModulesUpload
+	LambdaTypeCustomProvidersChecksumsUpload
+	LambdaTypeCustomProvidersUpload
+	LambdaTypeDefault
+	LambdaTypeDiscovery
+	LambdaTypeIndex
+	LambdaTypeModulesDownload
+	LambdaTypeModulesLatestVersion
+	LambdaTypeModulesList
+	LambdaTypeModulesSearch
+	LambdaTypeModulesVersions
+	LambdaTypeProvidersDownload
+	LambdaTypeProvidersVersions
+)
+
+var (
+	lambdaTypes = map[string]LambdaType{
+		"default": LambdaTypeDefault,
+		"index":   LambdaTypeIndex,
+
+		"authorizer": LambdaTypeAuthorizer,
+		"discovery":  LambdaTypeDiscovery,
+
+		"modules-download":       LambdaTypeModulesDownload,
+		"modules-latest-version": LambdaTypeModulesLatestVersion,
+		"modules-list":           LambdaTypeModulesList,
+		"modules-search":         LambdaTypeModulesSearch,
+		"modules-versions":       LambdaTypeModulesVersions,
+
+		"providers-download": LambdaTypeProvidersDownload,
+		"providers-versions": LambdaTypeProvidersVersions,
+
+		"custom-modules-upload":             LambdaTypeCustomModulesUpload,
+		"custom-providers-checksums-upload": LambdaTypeCustomProvidersChecksumsUpload,
+		"custom-providers-upload":           LambdaTypeCustomProvidersUpload,
+	}
+)
+
+func GetLambdaType() LambdaType {
+	str := os.Getenv("LAMBDA_TYPE")
+	c, ok := lambdaTypes[strings.ToLower(str)]
+	if !ok {
+		_, err := os.Stderr.WriteString(fmt.Sprintf("Unknown lambda type: %s", str))
+		if err != nil {
+			os.Exit(-1)
+		} else {
+			os.Exit(-2)
+		}
+	}
+	return c
+}
