@@ -1,0 +1,59 @@
+{
+    "resource": "",
+    "path": "",
+    "httpMethod": "",
+    "headers":
+    {
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate",
+        "authorization": "TODO",
+        "content-length": "0",
+        "host": "dueogt8bk4.execute-api.eu-central-1.amazonaws.com",
+        "user-agent": "python-requests/2.26.0",
+        "x-amzn-trace-id": "Root=1-62694ba7-239b59834b98df0f59aa23a8",
+        "x-forwarded-for": "46.188.19.87",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "multiValueHeaders": null,
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "pathParameters": null,
+    "stageVariables": null,
+    "requestContext":
+    {
+        "accountId": "463422107539",
+        "resourceId": "",
+        "stage": "$default",
+        "domainName": "dueogt8bk4.execute-api.eu-central-1.amazonaws.com",
+        "domainPrefix": "dueogt8bk4",
+        "requestId": "RPjCQjP2liAEPrg=",
+        "protocol": "",
+        "identity":
+        {
+            "cognitoIdentityPoolId": "",
+            "accountId": "",
+            "cognitoIdentityId": "",
+            "caller": "",
+            "apiKey": "",
+            "apiKeyId": "",
+            "accessKey": "",
+            "sourceIp": "",
+            "cognitoAuthenticationType": "",
+            "cognitoAuthenticationProvider": "",
+            "userArn": "",
+            "userAgent": "",
+            "user": ""
+        },
+        "resourcePath": "",
+        "authorizer":
+        {
+            "lambda": null
+        },
+        "httpMethod": "",
+        "requestTime": "",
+        "requestTimeEpoch": 0,
+        "apiId": "dueogt8bk4"
+    },
+    "body": ""
+}

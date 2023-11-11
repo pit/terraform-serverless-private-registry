@@ -1,0 +1,4 @@
+resource "openpgp_key" "this" {
+  name  = "${var.openpgp_name_prefix}-terraform-registry"
+  email = var.openpgp_email
+}
