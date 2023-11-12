@@ -6,18 +6,16 @@ resource "aws_s3_bucket" "this" {
     enabled = true
   }
 
-  object_lock_configuration {
-    object_lock_enabled = "Enabled"
-    # rule {
-    #   default_retention {
-    #     mode = "GOVERNANCE"
-    #   }
-    # }
-  }
-
   tags = merge({
     Name = var.storage_bucket_name
   }, var.tags)
+}
+
+resource "aws_s3_bucket_versioning" "this" {
+  bucket = aws_s3_bucket.this.id
+  versioning_configuration {
+    status = "Enabled"
+  }
 }
 
 resource "aws_s3_bucket_policy" "this" {
@@ -102,13 +100,3 @@ resource "aws_s3_bucket_public_access_block" "this" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
-
-# resource "aws_lambda_permission" "lambda_custom_signature_permission" {
-#   function_name = module.lambda_custom_s3_signature.lambda_function_name
-
-#   statement_id = "AllowInvokeFromS3Bucket"
-#   action       = "lambda:InvokeFunction"
-#   principal    = "s3.amazonaws.com"
-
-#   source_arn = aws_s3_bucket.this.arn
-# }
